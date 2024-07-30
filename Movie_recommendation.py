@@ -3,11 +3,17 @@ from surprise import Reader, Dataset, KNNWithMeans
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Load ratings data
-ratings = pd.read_csv('./data/ratings.csv')
+ratings = pd.read_csv('ratings.csv')
+
+# Load movies data
+movies = pd.read_csv('movies.csv')
+
+# Merge ratings with movies data using movie_id
+merged_data = pd.merge(ratings, movies, on='movie_id')
 
 # Build user-item matrix
 reader = Reader(rating_scale=(1, 5))
-data = Dataset.load_from_df(ratings, reader)
+data = Dataset.load_from_df(merged_data, reader)
 
 # Compute similarity between users
 similarity = cosine_similarity(data.user_item_matrix)
