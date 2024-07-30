@@ -1,0 +1,29 @@
+Here is the code you can enter in the GitHub Actions workflow file (`movie_recommendations.yml`):
+```
+name: Movie Recommendations
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          pip install pandas surprise
+
+      - name: Run movie recommendation script
+        run: |
+          python (Movie_recommendation.py) > output.txt
+
+      - name: Upload output as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: output
+          path: output.txt
